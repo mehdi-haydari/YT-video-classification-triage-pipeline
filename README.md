@@ -28,5 +28,19 @@ Any CSV with a header is supported; `ground_truth_label` is optional.
 Keep datasets in `data/` and generated results in `outputs/`; both are ignored
 by Git. No dataset is bundled with this project.
 
-`.env`, `.env.*`, and `*.env` files are ignored by Git. The starter needs no
-credentials and does not automatically load environment files.
+`.env`, `.env.*`, and `*.env` files are ignored by Git.
+
+## Model configuration
+
+`config.yaml` specifies the OpenRouter API address and the names of settings to
+read from the ignored `src/.env` file. Set `model` to your chosen model ID and
+`model_auth_key` to your API key in that file. Neither value is stored in
+`config.yaml`. To let OpenRouter choose a free model, set `model=openrouter/free`
+in `src/.env`. The CSV summary command does not contact the model or need a key.
+
+## Ana's protest clip
+
+[Saved model terminal output](artifacts/ana-protest-terminal-output.txt)
+
+- Removal: Ana's protest clip (`yt_c0041`) was correctly age-restricted rather than removed, matching `ground_truth_label=age_restrict` and the CSV's injury/news-value reason.
+- Timestamp fit: The cited injury frame `[01:50]` (110 seconds) falls within `ground_truth_violent_segments=55.0-130.0` (`[00:55-02:10]`); it supports the decision but does not identify the full segment boundaries.

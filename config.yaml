@@ -1,0 +1,8 @@
+# Model and credentials are read from the ignored env file.
+provider: openrouter
+model_variable: "model"
+api_base_url: "https://openrouter.ai/api/v1"
+env_file: "src/.env"
+api_key_variable: "model_auth_key"
+temperature: 0
+max_tokens: 1600

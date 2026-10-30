@@ -1,0 +1,3 @@
+Response model: nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free
+Finish reason: stop
+{"decision":"age-restricted","rationale":"The footage describes and visually depicts a canister striking a woman's shin and a visible wound with blood, which are explicit injury depictions requiring age restriction per the moderation policy.","evidence":[{"source":"transcript","timestamp":"[01:35-02:20]","quote":"A woman next to me took a canister to the shin. She is the one being carried out."},{"source":"frame_captions","timestamp":"[01:50]","quote":"An injured leg with a visible wound and blood on the pavement"}]}}

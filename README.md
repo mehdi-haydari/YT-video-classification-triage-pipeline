@@ -40,7 +40,19 @@ in `src/.env`. The CSV summary command does not contact the model or need a key.
 
 ## Ana's protest clip
 
-[Saved model terminal output](artifacts/ana-protest-terminal-output.txt)
+[Original model terminal output](artifacts/ana-protest-terminal-output.txt)
 
 - Removal: Ana's protest clip (`yt_c0041`) was correctly age-restricted rather than removed, matching `ground_truth_label=age_restrict` and the CSV's injury/news-value reason.
 - Timestamp fit: The cited injury frame `[01:50]` (110 seconds) falls within `ground_truth_violent_segments=55.0-130.0` (`[00:55-02:10]`); it supports the decision but does not identify the full segment boundaries.
+
+The original reply cited a single injury frame, so it did not demonstrate consideration of the surrounding clip context. A subsequent test requested assessment of every supplied transcript segment and frame caption, with evidence from before the injury, the injury itself, and later reporting context.
+
+- [Full request: prompt, complete supplied transcript, frame captions, and duration](artifacts/ana-protest-context-request.json)
+- [Unedited terminal reply from the context review](artifacts/ana-protest-context-terminal-output.txt)
+- [Pydantic, source evidence, and ground-truth comparison](artifacts/ana-protest-context-validation.json)
+
+The new reply returns `age-restricted` and cites `[00:20-00:55]`, `[01:50]`, and `[03:05-03:50]`, addressing both the injury and the reporting context when distinguishing age restriction from removal. Structure, exact quotes, timestamp fit, and the ground-truth label comparison pass. The request contains no ground-truth fields; evaluation is performed afterward.
+
+This assesses the supplied text, not the video itself. The input contains seven transcript segments ending at `[04:10]` and nine frame captions, with a stated duration of 254 seconds (`[04:14]`). The last four seconds have no transcript, and sparse captions do not establish continuous visual coverage. The saved input and broader citations make the test auditable, but cannot prove that the model considered every segment.
+
+The first context-review attempt returned malformed JSON and insufficient context citations; it is preserved as an [unedited reply](artifacts/ana-protest-context-attempt-1.txt) with its [request](artifacts/ana-protest-context-attempt-1-request.json).

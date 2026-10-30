@@ -1,0 +1,23 @@
+Response model: nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free
+Finish reason: stop
+{
+  "decision":"age-restricted",
+  "rationale":"The clip contains explicit depictions of a visible wound and blood (a woman struck in the shin, an injured leg with blood), which under the policy requires age restriction. The surrounding context is a journalist’s factual report of a lawful protest and official statements, which does not warrant removal, so age-restricted is appropriate.",
+  "evidence":[
+    {
+      "source":"transcript",
+      "timestamp":"[00:20-00:55]",
+      "quote":"The march was legal and had a permit until eight. This is at ten past eight."
+    },
+    {
+      "source":"frame_captions",
+      "timestamp":"[01:50]",
+      "quote":"An injured leg with a visible wound and blood on the pavement"
+    },
+    {
+      "source":"transcript",
+      "timestamp":"[03:05-03:50]",
+      "quote":"The ministry says the dispersal was lawful. The ombudsman has opened a file."
+    }
+  ]
+}

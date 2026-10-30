@@ -43,12 +43,14 @@ def load_settings(config_path: Path) -> tuple[dict, str, str]:
         raise ValueError("Configuration must be a YAML mapping")
     if config.get("provider") != "openrouter" or config.get("api_base_url") != "https://openrouter.ai/api/v1":
         raise ValueError("Expected the OpenRouter API address in config.yaml")
+    model = config.get("model")
+    if not isinstance(model, str) or not model.strip():
+        raise ValueError("config.yaml must contain a nonempty model ID")
     env_path = config_path.parent / config["env_file"]
     env = dotenv_values(env_path, interpolate=False)
-    model = env.get(config["model_variable"])
     key = env.get(config["api_key_variable"])
-    if not model or not key:
-        raise ValueError("The configured env file must contain a model and API key")
+    if not key:
+        raise ValueError("The configured env file must contain an API key")
     return config, model, key
 
 

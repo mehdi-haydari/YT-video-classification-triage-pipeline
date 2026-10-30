@@ -32,16 +32,18 @@ by Git. No dataset is bundled with this project.
 
 ## Model configuration
 
-`config.yaml` specifies the OpenRouter API address and the names of settings to
-read from the ignored `src/.env` file. Set `model` to your chosen model ID and
-`model_auth_key` to your API key in that file. Neither value is stored in
-`config.yaml`. To let OpenRouter choose a free model, set `model=openrouter/free`
-in `src/.env`. The CSV summary command does not contact the model or need a key.
+The committed `config.yaml` specifies the OpenRouter API address and the model
+ID under `model`: `nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free`, matching
+the model in the saved reply. Only the API key, under `model_auth_key`, belongs
+in the ignored `src/.env` file. The loader reads the model ID directly from
+`config.yaml` and does not use a model setting from `.env`. To let OpenRouter
+choose a free model instead, change `model` in `config.yaml` to `openrouter/free`.
+The CSV summary command does not contact the model or need a key.
 
 ## Run the raw model call
 
-From the repository root, after installing the project and setting `model` and
-`model_auth_key` in `src/.env`:
+From the repository root, after installing the project, setting the model in
+`config.yaml`, and setting `model_auth_key` in `src/.env`:
 
 ```sh
 python -m youtube_triage.call_model "/path/to/labelled-clips.csv" \

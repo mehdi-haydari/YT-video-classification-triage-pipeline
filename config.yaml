@@ -1,6 +1,6 @@
-# Model and credentials are read from the ignored env file.
+# The model is public configuration; only the API key stays in the env file.
 provider: openrouter
-model_variable: "model"
+model: "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free"
 api_base_url: "https://openrouter.ai/api/v1"
 env_file: "src/.env"
 api_key_variable: "model_auth_key"

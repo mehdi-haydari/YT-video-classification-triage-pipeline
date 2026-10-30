@@ -9,7 +9,7 @@ import urllib.error
 
 import pandas as pd
 
-from youtube_triage.call_model import load_clip, main
+from youtube_triage.call_model import load_clip, load_settings, main
 
 
 class RawCallTests(unittest.TestCase):
@@ -27,11 +27,11 @@ class RawCallTests(unittest.TestCase):
              "ground_truth_label": "secret evaluation label"},
         ]
         pd.DataFrame(self.rows).to_csv(self.csv, index=False)
-        (self.root / ".env").write_text('model="test/free"\nmodel_auth_key="test-key"\n')
+        (self.root / ".env").write_text('model_auth_key="test-key"\n')
         self.config = self.root / "config.yaml"
         self.config.write_text(
             'provider: openrouter\napi_base_url: "https://openrouter.ai/api/v1"\n'
-            'env_file: ".env"\nmodel_variable: model\napi_key_variable: model_auth_key\n'
+            'env_file: ".env"\nmodel: "test/free"\napi_key_variable: model_auth_key\n'
             'temperature: 0\nmax_tokens: 1600\n'
         )
         self.output = self.root / "reply.md"
@@ -66,6 +66,12 @@ class RawCallTests(unittest.TestCase):
         pd.DataFrame(self.rows).to_csv(self.csv, index=False)
         with self.assertRaisesRegex(ValueError, "found 2"):
             load_clip(self.csv, "Selected title")
+
+    def test_model_is_read_from_config_even_with_stale_env_setting(self):
+        (self.root / ".env").write_text('model="ignored/env-model"\nmodel_auth_key="test-key"\n')
+        _, model, key = load_settings(self.config)
+        self.assertEqual(model, "test/free")
+        self.assertEqual(key, "test-key")
 
     def test_failed_call_does_not_overwrite_reply(self):
         self.output.write_bytes(b"existing unedited reply")

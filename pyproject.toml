@@ -8,10 +8,11 @@ version = "0.1.0"
 description = "A small pandas-based starter for YouTube clip triage."
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["pandas>=2.2,<4", "PyYAML>=6,<7"]
+dependencies = ["pandas>=2.2,<4", "PyYAML>=6,<7", "python-dotenv>=1,<2"]
 
 [project.scripts]
 youtube-triage = "youtube_triage.__main__:main"
+youtube-triage-call = "youtube_triage.call_model:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

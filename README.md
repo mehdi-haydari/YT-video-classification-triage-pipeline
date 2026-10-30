@@ -1,8 +1,8 @@
 # YouTube video classification triage pipeline
 
 A small Python starter for exploring labelled YouTube clip datasets with pandas.
-The initial command reports the number of clips, available columns, and label
-counts when a `ground_truth_label` column exists. It does not classify videos yet.
+The summary command reports the number of clips, available columns, and label
+counts. A separate raw-call loader selects a clip by title and calls OpenRouter.
 
 ## Setup
 
@@ -37,6 +37,29 @@ read from the ignored `src/.env` file. Set `model` to your chosen model ID and
 `model_auth_key` to your API key in that file. Neither value is stored in
 `config.yaml`. To let OpenRouter choose a free model, set `model=openrouter/free`
 in `src/.env`. The CSV summary command does not contact the model or need a key.
+
+## Run the raw model call
+
+From the repository root, after installing the project and setting `model` and
+`model_auth_key` in `src/.env`:
+
+```sh
+python -m youtube_triage.call_model "/path/to/labelled-clips.csv" \
+  --title "Tear gas on Avenida Central: what I filmed from the second line" \
+  --output artifacts/ana-protest-context-terminal-output.md
+```
+
+The [loader](src/youtube_triage/call_model.py) uses pandas to select exactly one
+row by its `title` field. Only that row's transcript, frame captions, and duration
+are sent; ground-truth columns are excluded. The CSV path and title are arguments,
+and the dataset row count is reported without requiring 200 rows. The supplied
+resource currently contains 80 records.
+
+The [prompt](src/youtube_triage/prompt.py) contains the injury rule and response
+format used for this test. This is a raw call, not the full triage pipeline.
+The output file preserves `message.content` exactly, with the two model/finish
+metadata lines and the terminal's final newline. It does not repair or reformat
+the model's JSON. A failed API request leaves the existing artifact untouched.
 
 ## Ana's protest clip
 

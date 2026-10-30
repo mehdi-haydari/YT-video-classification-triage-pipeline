@@ -40,7 +40,7 @@ in `src/.env`. The CSV summary command does not contact the model or need a key.
 
 ## Ana's protest clip
 
-[Saved model terminal output](artifacts/ana-protest-context-terminal-output.txt)
+[Saved model terminal output](artifacts/ana-protest-context-terminal-output.md)
 
 - Removal: The model returned `age-restricted`, matching `ground_truth_label=age_restrict`; the CSV calls for age restriction rather than removal because the injury footage has news value.
 - Timestamp fit: The violation evidence at `[01:50]` falls within the labelled violent segment `[00:55-02:10]`; the reply cites only the injury evidence, without predicting full segment boundaries.
